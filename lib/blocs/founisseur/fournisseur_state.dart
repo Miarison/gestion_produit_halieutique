@@ -1,7 +1,7 @@
 import 'package:e_commerce/models/fournisseur.dart';
 import 'package:equatable/equatable.dart';
 
-enum Status {
+enum StatusF {
   initial,
   loading,
   loaded,
@@ -9,7 +9,7 @@ enum Status {
 }
 
 class FournisseurState extends Equatable{
-     final Status status;
+     final StatusF status;
      final List<Fournisseur> fournisseurs;
 
      const FournisseurState({
@@ -18,7 +18,7 @@ class FournisseurState extends Equatable{
      });
 
      FournisseurState copyWith({
-       Status? status,
+       StatusF? status,
        List<Fournisseur>? fournisseurs
      }){
         return FournisseurState(

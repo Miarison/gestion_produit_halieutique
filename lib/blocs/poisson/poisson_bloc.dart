@@ -5,9 +5,8 @@ import 'package:e_commerce/models/poisson.dart';
 import 'package:e_commerce/services/repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
 
-class PoissonBloc extends Bloc<PoissonEvent,PoissonState>{
+ class PoissonBloc extends Bloc<PoissonEvent,PoissonState>{
   final Repository repository;
 
   PoissonBloc({required this.repository}) : super(const PoissonState(status: Status.initial, poissons: [])){

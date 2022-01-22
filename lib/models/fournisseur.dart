@@ -15,7 +15,7 @@ class FournisseurFields{
 class Fournisseur{
 
     final int? id;
-    final String nom;
+    late final String nom;
     final int contact;
     final String image;
 

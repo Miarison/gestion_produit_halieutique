@@ -71,6 +71,9 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => FournisseurBloc(
                 fournisseurRepository: FournisseurRepository()
             )..add(OnFindAllFournisseurs())),
+            BlocProvider(create: (context) => AchatBloc(
+                achatRepository: AchatRepository()
+            )),
         ],
         child: const MaterialApp(
             home: Home(),

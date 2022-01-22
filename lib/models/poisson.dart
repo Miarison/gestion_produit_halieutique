@@ -39,16 +39,5 @@ class Poisson{
      PoissonFields.nom: nom,
      PoissonFields.image : image,
    };
-
-
+   
 }
-
-class PrixPoisson{
-    late final int id;
-    late final int id_poisson;
-    late final double prix;
-
-    PrixPoisson(this.id,{ required this.id_poisson, required this.prix});
-
-}
-

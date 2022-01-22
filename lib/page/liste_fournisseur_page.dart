@@ -11,11 +11,11 @@ class ListeFournisseurPage extends StatelessWidget {
     return Scaffold(
           body: BlocBuilder<FournisseurBloc,FournisseurState>(
              builder: (context,state){
-               if(state.status == Status.loading){
+               if(state.status == StatusF.loading){
                   return Container(
                       child: Text('Loading ...'),
                   );
-               }if(state.status == Status.loaded){
+               }if(state.status == StatusF.loaded){
                     return Column(
                          children: [
                             Expanded(
