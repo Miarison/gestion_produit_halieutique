@@ -26,8 +26,6 @@ class AchatDao {
             return achats.copy(id: id);
         }catch(ex){
            throw Exception(ex.toString());
-        }finally{
-           db.close();
         }
     }
 
@@ -52,7 +50,6 @@ class AchatDao {
     }
     Future<List<Achat>> findAllAchats() async{
         final db = await instanceDb.database;
-        // try{
           List result = await db.rawQuery('select*from achat');
           List<Achat> list =  [];
           for(int i = 0; i < result.length; i++ ){

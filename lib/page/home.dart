@@ -40,7 +40,6 @@ class _HomeState extends State<Home> {
                   itemCount: options.length,
                   itemBuilder: (BuildContext context,   int index){
                     return Container(
-                        // alignment: Alignment.topLeft,
                         margin: const EdgeInsets.all(10.0),
                         width: double.infinity,
                         height: 70.0,

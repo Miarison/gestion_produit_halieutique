@@ -16,8 +16,6 @@ class FournisseurDao{
 
     }catch(ex) {
       throw Exception(" erreur d insertion ");
-    }finally{
-      db.close();
     }
   }
   Future<List<Fournisseur>> findAllFournisseurs() async {
@@ -27,8 +25,6 @@ class FournisseurDao{
       return result.map((json) => Fournisseur.fromJson(json)).toList();
     }catch(ex){
       throw Exception(' ${ex.toString()},erreur de chargement');
-    }finally{
-      db.close();
     }
   }
   Future<Fournisseur> findById(int id) async {

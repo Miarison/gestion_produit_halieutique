@@ -1,12 +1,18 @@
 import 'dart:ui';
 import 'package:e_commerce/blocs/achat/achat_bloc.dart';
+import 'package:e_commerce/blocs/achat/achat_event.dart';
 import 'package:e_commerce/blocs/achat/achat_state.dart';
 import 'package:e_commerce/blocs/founisseur/fournisseur_bloc.dart';
 import 'package:e_commerce/blocs/founisseur/fournisseur_state.dart';
 import 'package:e_commerce/blocs/poisson/poisson_bloc.dart';
 import 'package:e_commerce/blocs/poisson/poisson_state.dart';
 import 'package:e_commerce/models/achat.dart';
+import 'package:e_commerce/models/fournisseur.dart';
+import 'package:e_commerce/models/poisson.dart';
 import 'package:e_commerce/services/achat_repository.dart';
+import 'package:e_commerce/services/fournisseur_repository.dart';
+import 'package:e_commerce/services/repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,17 +28,51 @@ class AjoutAchat extends StatefulWidget {
 
 class _AjoutAchatState extends State<AjoutAchat> {
 
-   late TextEditingController _prixController,_quantiteController;
 
-    List<String> nomFornisseur = [] ;
-    List<String> nomPoisson = [];
+     final prixController = TextEditingController();
 
-    final String _defaultValue = 'Morue';
+     final quantiteController = TextEditingController();
+
+     final _fournisseurRepository = FournisseurRepository() ;
+
+     final _poissonRepository = Repository();
+
+     List<String> nomFornisseur = [] ;
+
+     String dropdownValue = 'Sahondra';
+
+     String dropdownValuePoisson = 'Makoba';
+
+     int idFournisseur = 0;
+
+     int idPoisson = 0;
+
+     List<String> nomPoisson = [];
+
+
    @override
   void initState() {
-      // _fournisseurBloc.onFindAllFournisseur(event, emit)
+     _fournisseurRepository.findAllFournisseurs().then((value) {
+          setState(()  {
+              for(Fournisseur f in value){
+                  nomFornisseur.add(f.nom);
+              }
+          });
+     });
+    _poissonRepository.fetchAllPoissons().then((value) => setState((){
+               for(Poisson p in value){
+                  nomPoisson.add(p.nom);
+               }
+    }));
     // TODO: implement initState
     super.initState();
+  }
+  @override
+  void dispose() {
+      prixController.dispose();
+      quantiteController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,85 +102,64 @@ class _AjoutAchatState extends State<AjoutAchat> {
                  children: [
                    SizedBox(
                        width: 350,
-                       child: BlocBuilder<FournisseurBloc,FournisseurState>(
-                         builder:(context,state) {
-                           if(state.status == StatusF.initial){
-                             return Container();
-                           }if(state.status == StatusF.loaded){
-                               for(int i = 0; i <  state.fournisseurs.length; i++){
-                                 nomFornisseur.add(state.fournisseurs[i].nom);
-                               }
-                                return DropdownButton<String>(
-                                       isExpanded: true,
-                                       hint: const Text(
-                                       'Selectionner  fournisseur ...',
-                                        textAlign: TextAlign.right,
-                                       ),
-                                       iconSize: 40,
-                                       items: nomFornisseur.map((String value) {
-                                       return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                       );
-                                       }).toList(),
-                                       onChanged: (_) {
-                                       },
+                       child:DropdownButton<String>(
+                       isExpanded: true,
+                       value: dropdownValue,
+                       elevation: 24,
+                       iconSize: 40,
+                       onChanged: (String? newValue) {
+                         setState((){
+                           dropdownValue = newValue!;
+                           _fournisseurRepository.findIdByName(newValue).then(
+                                   (value) => idFournisseur = value
+                           );
 
-                                       );
-                           } else{
-                             return Container();
-                           }
-                         }
-                       )
-
+                         });
+                       },
+                     items: nomFornisseur.map<DropdownMenuItem<String>>((String data) =>
+                         DropdownMenuItem(
+                         child: Text(data),
+                         value: data
+                     )).toList(),
+                    ),
                    ),
                    const SizedBox(
                        height: 30
                    ),
                    SizedBox(
                        width: 350,
-                       child: BlocBuilder<PoissonBloc,PoissonState>(
-                           builder:(context,state) {
-                             if(state.status == Status.initial){
-                               return Container();
-                             }if(state.status == Status.loaded){
-                               for(int i = 0; i <  state.poissons.length; i++){
-                                 nomPoisson.add(state.poissons[i].nom);
-                               }
-                               return DropdownButton<String>(
-                                 isExpanded: true,
-                                 hint: const Text(
-                                   'Selectionner  poisson ...',
-                                   textAlign: TextAlign.right,
-                                 ),
-                                 iconSize: 40,
-                                 items: nomPoisson.map((String value) {
-                                   return DropdownMenuItem<String>(
-                                     value: value,
-                                     child: Text(value),
-                                   );
-                                 }).toList(),
-                                 onChanged: (String? newValue) {
-                                 },
-
-                               );
-                             } else{
-                               return Container();
-                             }
-                           }
-                       )
-
+                       child: DropdownButton<String>(
+                         isExpanded: true,
+                         value: dropdownValuePoisson,
+                         elevation: 24,
+                         iconSize: 40,
+                         onChanged: (String? newValue) {
+                           setState((){
+                             dropdownValuePoisson = newValue!;
+                             _poissonRepository.getIdByNom(newValue).then(
+                                     (value) => idPoisson = value
+                             );
+                           });
+                         },
+                         items: nomPoisson.map<DropdownMenuItem<String>>((String data) =>
+                             DropdownMenuItem(
+                                 child: Text(data),
+                                 value: data
+                             )).toList(),
+                     ),
                    ),
-                   const TextField(
+                    TextField(
+                     controller: prixController,
                      keyboardType: TextInputType.number,
-                     // controller: _prixController = TextEditingController(text: widget.)
-                     decoration: InputDecoration(
+
+                     decoration: const InputDecoration(
                        hintText: 'Prix',
                      ),
                    ),
-                   const TextField(
+                   TextField(
                      keyboardType: TextInputType.number,
-                     decoration: InputDecoration(
+                     controller: quantiteController,
+                     decoration: const InputDecoration(
                          hintText:  'Quantite',
                          hintStyle: TextStyle(
                          )
@@ -160,6 +179,14 @@ class _AjoutAchatState extends State<AjoutAchat> {
                            )
                        ),
                        onPressed:(){
+                         achatBloc.add(OnCreateAchat(achat: Achat(
+                             idPoisson: idPoisson,
+                             idFournisseur: idFournisseur,
+                             prix: double.tryParse(prixController.text)!,
+                             quantite: double.tryParse(quantiteController.text)!,
+                         )));
+                           print('idFournisseur $idFournisseur');
+                           print('idPoissson $idPoisson');
                          Navigator.push(
                              context,
                              MaterialPageRoute(
@@ -169,7 +196,6 @@ class _AjoutAchatState extends State<AjoutAchat> {
                        }, child: const Text('Valider achat',
                      style: TextStyle(
                        color: Colors.white,
-                       // fontWeight: FontWeight.bold
                      ),
                    ))
                  ],

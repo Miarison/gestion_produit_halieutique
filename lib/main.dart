@@ -6,6 +6,8 @@ import 'package:e_commerce/blocs/founisseur/fournisseur_event.dart';
 import 'package:e_commerce/blocs/poisson/poisson_bloc.dart';
 import 'package:e_commerce/blocs/poisson/poisson_event.dart';
 import 'package:e_commerce/blocs/poisson/poisson_state.dart';
+import 'package:e_commerce/blocs/vente/vente_bloc.dart';
+import 'package:e_commerce/blocs/vente/vente_event.dart';
 import 'package:e_commerce/dao/PoissonDao.dart';
 import 'package:e_commerce/dao/fournisseur_dao.dart';
 import 'package:e_commerce/models/achat.dart';
@@ -74,6 +76,9 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => AchatBloc(
                 achatRepository: AchatRepository()
             )),
+            BlocProvider(create: (context) => VenteBloc(
+
+            )..add(OnFindAllVente())),
         ],
         child: const MaterialApp(
             home: Home(),

@@ -16,4 +16,8 @@ class FournisseurRepository {
           return  fournisseur;
     }
 
+    Future<int> findIdByName(String name) async{
+         var idFournisseur = await _fournisseurDao.getIdByNom(name);
+         return idFournisseur;
+    }
 }

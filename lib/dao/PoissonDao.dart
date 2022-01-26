@@ -59,7 +59,7 @@ class PoissonDao{
              id = result[i]['id'].hashCode;
         }
       }else{
-        return throw Exception(" $nom n'existe pas dans la basse donnee ");
+        return throw Exception(" $nom n'existe pas dans la base donnee ");
       }
      return id;
   }
