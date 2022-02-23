@@ -24,9 +24,24 @@ class VenteDao {
         throw Exception(ex.toString());
       }
   }
+  DateTime getDate(String timeDate)  {
+    var date = DateTime.parse(timeDate);
+    return date;
+  }
   Future<List<Vente>> findAllVente() async {
          final db = await instanceDb.database;
-         final result = await db.query(vente);
-         return result.map((json) => Vente.fromJson(json)).toList();
+         List result = await db.rawQuery('select*from vente');
+         List<Vente> list =  [];
+         for(int i = 0; i < result.length; i++ ){
+           list.add(
+               Vente(
+                   id_poisson: result[i]["id_poisson"],
+                   prix:  result[i]["prix"],
+                   quantite: result[i]["quantite"],
+                   date_vente:  getDate(result[i]["date_vente"]
+                   ))
+           );
+         }
+         return list;
   }
 }

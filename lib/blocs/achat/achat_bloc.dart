@@ -43,7 +43,7 @@ class AchatBloc extends Bloc<AchatEvent,AchatState>{
           emitter(state.copy(status: Status.loaded));
         }catch(ex){
           emitter(state.copy(status: Status.error));
-          throw Exception("erreur d'insertion");
+          throw Exception(ex.toString());
         }
   }
 }

@@ -3,6 +3,9 @@ import 'package:e_commerce/blocs/achat/achat_event.dart';
 import 'package:e_commerce/blocs/achat/achat_state.dart';
 import 'package:e_commerce/blocs/founisseur/fournisseur_bloc.dart';
 import 'package:e_commerce/blocs/founisseur/fournisseur_event.dart';
+import 'package:e_commerce/blocs/historique/Historique_bloc.dart';
+import 'package:e_commerce/blocs/historique/historique_event.dart';
+import 'package:e_commerce/blocs/historique/historique_state.dart';
 import 'package:e_commerce/blocs/poisson/poisson_bloc.dart';
 import 'package:e_commerce/blocs/poisson/poisson_event.dart';
 import 'package:e_commerce/blocs/poisson/poisson_state.dart';
@@ -19,6 +22,8 @@ import 'package:e_commerce/services/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
+import 'models/historique.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,6 +84,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => VenteBloc(
 
             )..add(OnFindAllVente())),
+           BlocProvider(create: (context) => HistoriqueBloc()),
         ],
         child: const MaterialApp(
             home: Home(),

@@ -1,18 +1,16 @@
 import 'dart:ui';
 import 'package:e_commerce/blocs/achat/achat_bloc.dart';
 import 'package:e_commerce/blocs/achat/achat_event.dart';
-import 'package:e_commerce/blocs/achat/achat_state.dart';
-import 'package:e_commerce/blocs/founisseur/fournisseur_bloc.dart';
-import 'package:e_commerce/blocs/founisseur/fournisseur_state.dart';
-import 'package:e_commerce/blocs/poisson/poisson_bloc.dart';
-import 'package:e_commerce/blocs/poisson/poisson_state.dart';
+import 'package:e_commerce/blocs/historique/Historique_bloc.dart';
+import 'package:e_commerce/blocs/historique/historique_event.dart';
+
 import 'package:e_commerce/models/achat.dart';
 import 'package:e_commerce/models/fournisseur.dart';
+import 'package:e_commerce/models/historique.dart';
 import 'package:e_commerce/models/poisson.dart';
 import 'package:e_commerce/services/achat_repository.dart';
 import 'package:e_commerce/services/fournisseur_repository.dart';
 import 'package:e_commerce/services/repository.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -64,6 +62,7 @@ class _AjoutAchatState extends State<AjoutAchat> {
                   nomPoisson.add(p.nom);
                }
     }));
+
     // TODO: implement initState
     super.initState();
   }
@@ -77,11 +76,13 @@ class _AjoutAchatState extends State<AjoutAchat> {
   @override
   Widget build(BuildContext context) {
     AchatBloc achatBloc = BlocProvider.of<AchatBloc>(context);
+    HistoriqueBloc historiqueBloc = BlocProvider.of<HistoriqueBloc>(context);
 
     return Scaffold(
        appBar: AppBar(
            title: const Text('Nouveau Achat'),
-         backgroundColor: Colors.teal,
+         // backgroundColor: Colors.teal,
+         backgroundColor: Color(0xFFEA5042),
        ),
        body: Container(
          // color: Colors.red,
@@ -171,7 +172,7 @@ class _AjoutAchatState extends State<AjoutAchat> {
                    ElevatedButton(
                        style: ElevatedButton.styleFrom(
                            minimumSize: const Size(355, 40),
-                           primary: Colors.teal,
+                           primary: const Color(0xFFEA5042),
                            // shape:StadiumBorder(),
                            textStyle: const TextStyle(
                              fontStyle: FontStyle.normal,
@@ -179,14 +180,14 @@ class _AjoutAchatState extends State<AjoutAchat> {
                            )
                        ),
                        onPressed:(){
+
                          achatBloc.add(OnCreateAchat(achat: Achat(
                              idPoisson: idPoisson,
                              idFournisseur: idFournisseur,
                              prix: double.tryParse(prixController.text)!,
                              quantite: double.tryParse(quantiteController.text)!,
                          )));
-                           print('idFournisseur $idFournisseur');
-                           print('idPoissson $idPoisson');
+
                          Navigator.push(
                              context,
                              MaterialPageRoute(

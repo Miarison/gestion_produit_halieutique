@@ -46,12 +46,12 @@ class FournisseurDao{
     var id = 0;
 
     final result = await db.rawQuery(
-        "SELECT id FROM "
+        "SELECT _id FROM "
             " $fournisseur WHERE nom = '$nom'"
     );
     if(result.isNotEmpty){
       for(int i =0;i<result.length;i++){
-        id = result[i]['id'].hashCode;
+        id = result[i]['_id'].hashCode;
       }
     }else{
       return throw Exception(" $nom n'existe pas dans la basse donnee ");

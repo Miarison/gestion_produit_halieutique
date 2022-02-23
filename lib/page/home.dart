@@ -26,12 +26,12 @@ class _HomeState extends State<Home> {
     return Scaffold(
         appBar: AppBar(
              leading: Icon(Icons.import_contacts_sharp),
-             title: Text(
+             title: const Text(
                  'Accueil',
                 ),
              toolbarHeight: 100,
-             // backgroundColor: Color(0xFFEA5042),
-                 backgroundColor: Colors.teal,
+             backgroundColor: Color(0xFFEA5042),
+                 // backgroundColor: Colors.teal,
         ) ,
         body: Column(
           children: [

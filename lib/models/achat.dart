@@ -4,12 +4,12 @@ class AchatFields{
   static final List<String> colonneAchat =[
     id, id_poisson,id_fournisseur,prix,quantite,date_achat
   ];
-   static final String id ='id';
-   static final String id_poisson = 'idPoisson';
-   static final String id_fournisseur ='idFournisseur';
-   static final String prix = 'prix';
-   static final String quantite = 'quantite';
-   static final String  date_achat ='dateAchat';
+   static const String id ='id';
+   static const String id_poisson = 'idPoisson';
+   static const String id_fournisseur ='idFournisseur';
+   static const String prix = 'prix';
+   static const String quantite = 'quantite';
+   static const String  date_achat ='dateAchat';
 
 }
 class Achat {

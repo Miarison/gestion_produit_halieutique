@@ -15,4 +15,8 @@ class AchatRepository{
         Achat  achat = await achatDao.findById(id);
         return achat;
     }
+    Future<int> getCurrentId() async{
+       int id = await achatDao.getLastId();
+       return id;
+    }
 }
